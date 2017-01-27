@@ -44,6 +44,24 @@ class Rubeque
     def sum_over_50(arr)
         arr.reject{|num| num <= 50}.inject(0,&:+)
     end
+    
+    def no_way
+        @name = "Dave"
+        "My mind is going #@name"
+    end
+    
+    def versus
+        roses = "blue" && "red"
+        violets = "blue" and "red"
+        "Roses are #{roses} and violets are #{violets}"
+    end
+    
+    def item_removal
+        ([:r, :u, :b, :e, :q, :u, :e].reject{|item| item == :r || item == :u || item == :e})  #b,q
+        ([:r, :u, :b, :e, :q, :u, :e].select{|item| item == :b || item == :q })  #b,q
+        ([:r, :u, :b, :e, :q, :u, :e].replace([:b,:q]))  #b,q
+        ([:r, :u, :b, :e, :q, :u, :e]&[:b,:q])  #b,q
+    end
 end    
 
 class RubequeTest < Test::Unit::TestCase
@@ -89,6 +107,21 @@ class RubequeTest < Test::Unit::TestCase
         assert_equal so_50.sum_over_50([5, 11, 50]), 0
         assert_equal so_50.sum_over_50([4, 8, 15, 16, 23, 42]), 0
         assert_equal so_50.sum_over_50([300, 22, 1, 55, 42]), 355
+    end
+    
+    def test_no_way
+        nw = Rubeque.new
+        assert_equal nw.no_way, "My mind is going Dave"
+    end
+    
+    def test_versus
+        v = Rubeque.new
+        assert_equal v.versus, "Roses are red and violets are blue" 
+    end
+    
+    def test_air
+        air = Rubeque.new
+        assert_equal air.item_removal, [:b, :q]
     end
     
 end
