@@ -2,6 +2,9 @@
 require 'test/unit'
 require "test/unit/assertions"
 include Test::Unit::Assertions
+
+
+
  
 class Rubeque
     
@@ -57,11 +60,13 @@ class Rubeque
     end
     
     def item_removal
+        # All solutions work
         ([:r, :u, :b, :e, :q, :u, :e].reject{|item| item == :r || item == :u || item == :e})  #b,q
         ([:r, :u, :b, :e, :q, :u, :e].select{|item| item == :b || item == :q })  #b,q
         ([:r, :u, :b, :e, :q, :u, :e].replace([:b,:q]))  #b,q
         ([:r, :u, :b, :e, :q, :u, :e]&[:b,:q])  #b,q
     end
+    
 end    
 
 class RubequeTest < Test::Unit::TestCase
@@ -122,6 +127,34 @@ class RubequeTest < Test::Unit::TestCase
     def test_air
         air = Rubeque.new
         assert_equal air.item_removal, [:b, :q]
+    end
+    
+    def test_or_equal
+        b = 8
+        c = false
+        
+        a ||= "rubeque"
+        b ||= "rubeque"
+        c ||= "rubeque"
+        
+         assert_equal a, "rubeque"
+         assert_equal b, 8
+         assert_equal c, "rubeque"
+    end
+    
+    
+    def test_no_way_string
+        str = "Hello" "World"
+        assert_equal str, "HelloWorld"
+    end
+    
+    def test_range
+        assert_equal (1..100).to_a[11..94].reduce(:+), 4494
+    end
+    
+    def test_sugar
+        assert_equal 2.method(:+).call(2), 2 + 2
+        assert_equal 40.method(:+).call(2), 42
     end
     
 end
