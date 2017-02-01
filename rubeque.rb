@@ -157,4 +157,61 @@ class RubequeTest < Test::Unit::TestCase
         assert_equal 40.method(:+).call(2), 42
     end
     
+    def test_brackets
+        assert_equal "hello world"["e"], "e"
+        assert_equal "what"["e"],        nil
+        assert_equal "rubeque" ["e"],     "e"
+        assert_equal "E"["e"],           nil
+    end
+    
+    def test_set_intersection
+        assert_equal ([ 1, 1, 3, 5 ] & [ 1, 2, 3 ]), [ 1, 3 ]
+    end
+    
+    def test_alternate_notations
+        assert_equal %w(hello world), ["hello", "world"]
+        assert_equal %w{1 2 3 4}, ["1", "2", "3", "4"]
+        assert_equal %w?remembrance of things past?, ["remembrance", "of", "things", "past"]
+    end
+    
+    module Getters_and_setters
+        class Character
+          attr_accessor :name, :quote
+        end
+    end
+    
+    def test_getters_and_setters
+        thorin = Getters_and_setters::Character.new
+        thorin.name = "Thorin Oakenshield"
+        thorin.quote = "Some courage and some wisdom, blended in measure. If more of us valued food 
+          and cheer and song above hoarded gold, it would be a merrier world"
+          
+        stephen = Getters_and_setters::Character.new
+        stephen.name = "Stephen Dedalus"
+          
+        assert_equal thorin.name, "Thorin Oakenshield" 
+        assert_equal stephen.name, "Stephen Dedalus"
+    end    
+    
+    
+    def test_caution_case
+        def caution_case(obj)
+          case obj
+          when obj
+            true
+          else
+            false
+          end
+        end
+        
+        assert_equal caution_case( 1 ), true
+        assert_equal caution_case( [1, 2] ), true
+        assert_equal caution_case( {1=>2} ), true
+        assert_equal caution_case( (1..2) ), false
+        # this is because case when uses the === operator for comparison and translates the code to when obj (from the when statement) === obj (from the case statement)
+        # range === obj returns true if obj is an element of the range and false if otherwise 
+        # In this case since the obj (from the case statement) is a range and not an element of the range, it returns false
+    
+        
+    end
 end
