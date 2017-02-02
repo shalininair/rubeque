@@ -214,4 +214,74 @@ class RubequeTest < Test::Unit::TestCase
     
         
     end
+    
+    def test_ternary
+        a = "Miles O'Brien"
+        b = "Barack Obama"
+        
+        assert_equal ((a =~ /[ ]\w'/) ? "Irish" : "Not Irish"), "Irish"
+        assert_equal ((b =~ /[ ]\w'/) ? 'Irish' : 'Not Irish'), "Not Irish"        
+    end
+    
+    module Queue_Continuum
+        class Queue
+           
+           def initialize(arr)
+              @q = arr
+           end
+           
+           def pop(*pop_count)
+              @q.shift(*pop_count)
+           end
+           def push(arr)
+               @q.push(*arr) ? true : false
+           end
+           def to_a
+               @q
+           end
+        end
+        
+    end
+    
+    def test_queue_continuum
+        queue = Queue_Continuum::Queue.new([5, 6, 7, 8])
+        #p queue.inspect
+        
+         assert_equal queue.pop, 5
+         assert_equal queue.pop, 6
+         assert_equal queue.push([4, 2]), true
+         assert_equal queue.pop(2), [7, 8]
+         assert_equal queue.to_a, [4, 2]
+    end
+    
+    def test_missing_method_3
+        a1 = [1, 2, 3]
+        a2 = [2, 3, 4]
+        b1 = ["durham", "bartow", "zwolle"]
+        b2 = ["nc", "fl", "nl"]
+        
+        assert_equal a1.zip(a2), [[1, 2], [2, 3], [3, 4]]
+        assert_equal [10, 11, 12].zip(a1, a2), [[10, 1, 2], [11, 2, 3], [12, 3, 4]]
+        assert_equal b1.zip(b2), [["durham", "nc"], ["bartow", "fl"], ["zwolle", "nl"]]        
+    end
+    
+    def test_defined
+        
+        if false
+          w = :whatever
+        end
+        
+        assert_equal defined?(w) != nil, true        
+    end
+   
+   def test_probability
+       
+        random_values = (0..1000000).inject(0.0) do |sum, _| 
+          sum += rand(14) + rand(14)
+        end
+        assert_equal (random_values/1000000.0).round, 13
+        # The formula is sum of all( seeds - 1) / 2
+        #e.g. in the above code if we use sum += rand(14) + rand(16) + rand(18) + rand(20), 
+        # random_values/1000000.0).round will be (13+15+17+19)/2 = 32
+   end
 end
