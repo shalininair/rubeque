@@ -284,4 +284,57 @@ class RubequeTest < Test::Unit::TestCase
         #e.g. in the above code if we use sum += rand(14) + rand(16) + rand(18) + rand(20), 
         # random_values/1000000.0).round will be (13+15+17+19)/2 = 32
    end
+   
+   def test_no_limit
+        assert_equal ["1", "2", "3"], "1,2,3".split(',',-1)
+        assert_equal ["", "", "1", "2", "3"], ",,1,2,3".split(',',-1)
+        assert_equal ["1", "2", "3", "", ""], "1,2,3,,".split(',',-1)       
+   end
+   
+   module Stacks
+   #  Implement a last-in-first-out datatype
+        class Stack
+            
+            def initialize(input_array)
+             @object = input_array    
+            end
+          
+            def pop(*pop_count)
+              pop_count == [] ? @object.pop(*pop_count) : @object.pop(*pop_count).reverse
+            end
+            
+            def push(arr)
+                true if @object.push(*arr)
+            end
+            
+            def to_a
+                @object
+            end
+            
+            
+        end
+    end    
+    
+    def test_stack
+
+        stack = Stacks::Stack.new([5, 6, 7, 8])
+        assert_equal stack.pop, 8
+        assert_equal stack.pop, 7
+        assert_equal stack.push([4, 2]), true
+        assert_equal stack.pop(3), [2, 4, 6]
+        assert_equal stack.to_a, [5]
+    end    
+    
+    module Missing_Method4
+        class A
+        end
+        
+        class B < A
+        end
+    end
+    
+    def test_missing_method_4
+        assert_equal Missing_Method4::B.ancestors[1], Missing_Method4::A        
+    end
+
 end
