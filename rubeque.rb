@@ -336,5 +336,30 @@ class RubequeTest < Test::Unit::TestCase
     def test_missing_method_4
         assert_equal Missing_Method4::B.ancestors[1], Missing_Method4::A        
     end
+    
+    def test_missing_method_5
+   #  Implementing associative arrays to store ordered maps        
+        trilogy = [["Sympathy for Mr Vengeance", "Ryu", "Cha Yeong-mi"], ["Oldboy", "Oh Dae-su", "Kang Hye-jeong"], 
+          ["Sympathy for Lady Vengeance", "Lee Geum-ja"]]
+          
+        assert_equal trilogy.assoc("Sympathy for Lady Vengeance"), ["Sympathy for Lady Vengeance", "Lee Geum-ja"]
+        assert_equal trilogy.rassoc("Ryu"), ["Sympathy for Mr Vengeance", "Ryu", "Cha Yeong-mi"]
+        assert_equal trilogy.rassoc("Lee Geum-ja"), ["Sympathy for Lady Vengeance", "Lee Geum-ja"]
+        
+    end
+    
+    def test_default_encoding
+        assert_equal "".encoding, Encoding::UTF_8
+        assert_equal "ascii compatible string".encoding, Encoding::UTF_8
+    end
+    
+    def test_curry
+    #Create a partial function based on an existing lambda by using currying    
+    #refer https://www.sitepoint.com/functional-programming-techniques-with-ruby-part-ii/ for curry 
+        exponential = -> x, y { y ** x }
+        squared = exponential.curry[2]
+        
+        assert_equal squared.(3) == 9, true        
+    end
 
 end
