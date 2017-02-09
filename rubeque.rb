@@ -361,5 +361,35 @@ class RubequeTest < Test::Unit::TestCase
         
         assert_equal squared.(3) == 9, true        
     end
+    
+    def test_shotgun
+        a, b, c = "eat", "chunky", "bacon"
+        
+        assert_equal a, "eat"
+        assert_equal b, "chunky"
+        assert_equal c, "bacon"        
+    end
+    
+    def test_even
+        
+        def first_even(items)
+            
+            items.find(&:even?)
+        
+        end 
+        
+        items = [10,-1, 3, 5, -2, 4]
+        assert_equal first_even(items), 10
+    end
+    
+    
+    def test_reverse_each_word
+        def reverse_each_word(sentence)
+         #sentence.split().collect{|word| word.reverse}.join(' ')
+         sentence.gsub(/\S+/,&:reverse)
+        end
+
+        assert_equal "olleH ,ereht dna woh era ?uoy", reverse_each_word("Hello there, and how are you?")        
+    end
 
 end
